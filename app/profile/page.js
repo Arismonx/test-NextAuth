@@ -1,9 +1,19 @@
 
 'use client'
 import { useSession,signOut } from 'next-auth/react'
+import { useEffect } from 'react'
+import { useRouter  } from 'next/navigation'
 
 export default function Profile() {
     const { data: session , status } = useSession()
+    const router = useRouter()
+
+    useEffect(()=>{
+        if (status === 'unauthenticated' ){
+            router.push('/')
+        }
+    },[router,status])
+
     console.log('Session: ',session)
     console.log('Status: ',status)
     return (
